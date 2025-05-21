@@ -4,7 +4,7 @@
   --bgColor: #333;
   --textPrimary: #fff;
   --textSecondary: #adadad;
-  --primaryColor: #fd4;
+  --primaryColor: rgb(230, 68, 255);
 }
 
 body {
@@ -71,7 +71,7 @@ div#game {
 }
 
 #words {
-  filter: blur(3px);
+  filter: blur(5px);
   color: var(--textSecondary);
 }
 
@@ -82,7 +82,7 @@ div#game {
 div#focus-warning {
   position: absolute;
   inset: 0;
-  margin: 35px;
+  margin: 40px;
   text-align: center;
   font-size: 1.5rem;
 }
@@ -118,9 +118,9 @@ div#game:focus #focus-warning {
   height: 1.5rem;
   background-color: var(--primaryColor);
   position: fixed;
-  top: 204px;
-  left: 148px;
-  animation: blink 0.5s infinite;
+  top: 205px;
+  left: 150px;
+  animation: blink 0.6s infinite;
 }
 
 #game:focus #cursor {

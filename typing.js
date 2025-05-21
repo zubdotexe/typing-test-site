@@ -2476,8 +2476,7 @@ const formatWord = (word) => {
   return `<div class="word">
     <span class="letter">${word
       .split("")
-      .join('</span><span class="letter">')}</span>
-    </div>`;
+      .join('</span><span class="letter">')}</span></div>`;
 };
 
 const addClass = (e, classToBeAdded) => {
@@ -2517,7 +2516,10 @@ document.getElementById("game").addEventListener("keyup", (e) => {
   const actualKey = e.key;
   let expectedKey = currentLetter?.innerHTML || " ";
   // console.log(expectedKey);
-  const isSpaceKey = e.key === " ";
+  const isSpaceKey = actualKey === " ";
+  const isBackSpace = actualKey === "Backspace";
+  const isFirstLetter = currentLetter === currentWord.firstElementChild;
+  const isLetter = actualKey.length === 1 && actualKey !== " ";
 
   console.log({ expected: expectedKey, actual: actualKey });
 
@@ -2530,10 +2532,13 @@ document.getElementById("game").addEventListener("keyup", (e) => {
     );
 
     if (currentWord.lastElementChild === lastLetter) {
-      console.log("if inside last child", currentWord, currentWord.lastElementChild);
+      console.log(
+        "if inside last child",
+        currentWord,
+        currentWord.lastElementChild
+      );
       removeClass(currentWord, "current");
       addClass(currentWord.nextSibling, "current");
-
 
       if (currentLetter) {
         removeClass(currentLetter, "current");
@@ -2544,7 +2549,7 @@ document.getElementById("game").addEventListener("keyup", (e) => {
       addClass(getCurrentWord().firstElementChild, "current");
     } else {
       console.log("currentLetter", currentLetter);
-      
+
       addLabel(currentLetter, "incorrect");
       if (currentLetter.nextElementSibling) {
         addClass(currentLetter.nextElementSibling, "current");
@@ -2552,7 +2557,7 @@ document.getElementById("game").addEventListener("keyup", (e) => {
         expectedKey = " ";
       }
     }
-  } else {
+  } else if (isLetter) {
     if (currentWord.lastElementChild !== currentLetter && expectedKey == " ") {
       console.log("here");
 
@@ -2584,15 +2589,53 @@ document.getElementById("game").addEventListener("keyup", (e) => {
       lastLetter = currentLetter;
       console.log("else last child, last letter", lastLetter);
     }
+  } else if (isBackSpace) {
+    console.log("back space pressed", currentLetter, isFirstLetter);
+
+    if (currentLetter && isFirstLetter) {
+      if (currentWord.previousSibling) {
+        removeClass(currentWord, "current");
+        addClass(currentWord.previousSibling, "current");
+        removeClass(currentLetter, "current");
+        addClass(currentWord.previousSibling.lastElementChild, "current");
+
+        removeClass(currentWord.previousSibling.lastElementChild, "incorrect");
+        removeClass(currentWord.previousSibling.lastElementChild, "correct");
+      }
+    }
+
+    if (currentLetter && !isFirstLetter) {
+      removeClass(currentLetter, "current");
+      addClass(currentLetter.previousSibling, "current");
+
+      removeClass(currentLetter.previousSibling, "incorrect");
+      removeClass(currentLetter.previousSibling, "correct");
+    }
+
+    if (currentWord && expectedKey === " ") {
+      // removeClass(currentLetter, "current");
+      addClass(currentWord.lastElementChild, "current");
+
+      removeClass(currentWord.lastElementChild, "incorrect");
+      removeClass(currentWord.lastElementChild, "correct");
+    }
   }
 
   // moving cursor
 
-  const nextWord = getCurrentWord(); 
-  const nextLetter = document.querySelector('.letter.current'); 
+  const nextWord = getCurrentWord();
+  const nextLetter = document.querySelector(".letter.current");
   const cursor = document.getElementById("cursor");
-  cursor.style.left = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left': 'right'] + 'px';
-  cursor.style.top = nextLetter.getBoundingClientRect().top + 2 + 'px';
+  cursor.style.left =
+    (nextLetter || nextWord).getBoundingClientRect()[
+      nextLetter ? "left" : "right"
+    ] + "px";
+  if (nextLetter) {
+    cursor.style.top = nextLetter.getBoundingClientRect().top + 6 + "px";
+    //     cursor.style.left = nextLetter.getBoundingClientRect().left + 5 + 'px';
+  } else {
+    cursor.style.top = nextWord.getBoundingClientRect().top + 7.6 + "px";
+  }
 });
 
 newGame();
