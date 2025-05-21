@@ -2513,34 +2513,28 @@ let lastLetter;
 
 document.getElementById("game").addEventListener("keyup", (e) => {
   const currentWord = getCurrentWord();
-  const currentLetter = document.querySelector(".letter.current");
+  let currentLetter = document.querySelector(".letter.current");
   const actualKey = e.key;
   let expectedKey = currentLetter?.innerHTML || " ";
-  console.log(expectedKey);
-  
+  // console.log(expectedKey);
   const isSpaceKey = e.key === " ";
-  
 
-  // const spaceSpan = document.createElement("span");
-  // spaceSpan.textContent = " ";
-  // spaceSpan.classList.add("letter");
-
-  // console.log(currentLetter);
   console.log({ expected: expectedKey, actual: actualKey });
 
-  // addClass(currentLetter, actualKey === expectedKey ? "correct" : "incorrect");
-  // removeClass(currentLetter, "current");
-  // instead of the two above lines, i can write one line
-
   if (isSpaceKey) {
-    console.log("inside isspace", currentWord.lastElementChild, currentLetter, lastLetter);
-    
+    console.log(
+      "inside isspace",
+      currentWord.lastElementChild,
+      currentLetter,
+      lastLetter
+    );
+
     if (currentWord.lastElementChild === lastLetter) {
       removeClass(currentWord, "current");
       addClass(currentWord.nextSibling, "current");
 
       console.log("if inside last child");
-      
+
       if (currentLetter) {
         removeClass(currentLetter, "current");
       }
@@ -2548,38 +2542,43 @@ document.getElementById("game").addEventListener("keyup", (e) => {
       console.log("inside nested if");
 
       addClass(getCurrentWord().firstElementChild, "current");
-    } 
-
-    // if (space) {
-    // if (currentWord.lastElementChild == currentLetter) {
-    //   currentWord.appendChild(spaceSpan, currentLetter);
-    //   console.log("insde space", currentWord.lastElementChild);
-    // }
-    // }
-
-    // }
+    } else {
+      addLabel(currentLetter, "incorrect");
+      addClass(currentLetter.nextElementSibling, "current");
+    }
   } else {
+    if (currentWord.lastElementChild !== currentLetter && expectedKey == " ") {
+      console.log("here");
+
+      currentLetter = document.createElement("span");
+      currentLetter.innerHTML = actualKey;
+      currentLetter.classList = "letter incorrect";
+      currentWord.appendChild(currentLetter);
+
+      removeClass(currentWord, "current");
+      addClass(currentWord.nextSibling, "current");
+      addClass(getCurrentWord().firstElementChild, "current");
+    } else {
       addLabel(
         currentLetter,
         actualKey === expectedKey ? "correct" : "incorrect"
       );
-      console.log("current letter", currentLetter);
-      
-      if (currentLetter.nextElementSibling) {
-        console.log("else next sibling", currentLetter.nextElementSibling);
-        
-        addClass(currentLetter.nextSibling, "current");
-      }
-
-      if (currentWord.lastElementChild == currentLetter) {
-        // if (space) {
-        // console.log("else last child");
-        expectedKey = " ";
-        lastLetter = currentLetter;
-        console.log("else last child, last letter", lastLetter);
-        
-      }
     }
+
+    console.log("current letter", currentLetter);
+
+    if (currentLetter?.nextElementSibling) {
+      console.log("else next sibling", currentLetter.nextElementSibling);
+
+      addClass(currentLetter.nextSibling, "current");
+    }
+    // if (currentWord.lastElementChild == currentLetter) {
+    else {
+      expectedKey = " ";
+      lastLetter = currentLetter;
+      console.log("else last child, last letter", lastLetter);
+    }
+  }
 });
 
 newGame();
