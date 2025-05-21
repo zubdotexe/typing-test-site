@@ -2530,10 +2530,10 @@ document.getElementById("game").addEventListener("keyup", (e) => {
     );
 
     if (currentWord.lastElementChild === lastLetter) {
+      console.log("if inside last child", currentWord, currentWord.lastElementChild);
       removeClass(currentWord, "current");
       addClass(currentWord.nextSibling, "current");
 
-      console.log("if inside last child");
 
       if (currentLetter) {
         removeClass(currentLetter, "current");
@@ -2543,8 +2543,14 @@ document.getElementById("game").addEventListener("keyup", (e) => {
 
       addClass(getCurrentWord().firstElementChild, "current");
     } else {
+      console.log("currentLetter", currentLetter);
+      
       addLabel(currentLetter, "incorrect");
-      addClass(currentLetter.nextElementSibling, "current");
+      if (currentLetter.nextElementSibling) {
+        addClass(currentLetter.nextElementSibling, "current");
+      } else {
+        expectedKey = " ";
+      }
     }
   } else {
     if (currentWord.lastElementChild !== currentLetter && expectedKey == " ") {
@@ -2579,6 +2585,14 @@ document.getElementById("game").addEventListener("keyup", (e) => {
       console.log("else last child, last letter", lastLetter);
     }
   }
+
+  // moving cursor
+
+  const nextWord = getCurrentWord(); 
+  const nextLetter = document.querySelector('.letter.current'); 
+  const cursor = document.getElementById("cursor");
+  cursor.style.left = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left': 'right'] + 'px';
+  cursor.style.top = nextLetter.getBoundingClientRect().top + 2 + 'px';
 });
 
 newGame();

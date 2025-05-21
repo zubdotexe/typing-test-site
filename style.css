@@ -95,7 +95,7 @@ div#game:focus #focus-warning {
   font-family: "Roboto Mono", monospace;
   display: inline-block;
   margin: 0 10px;
-  font-size: larger;
+  font-size: x-large;
 }
 
 .letter.correct {
@@ -104,4 +104,25 @@ div#game:focus #focus-warning {
 
 .letter.incorrect {
   color: #f55;
+}
+
+@keyframes blink{
+  0% {opacity: 1;}
+  50% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+#cursor {
+  display: none;
+  width: 2px;
+  height: 1.5rem;
+  background-color: var(--primaryColor);
+  position: fixed;
+  top: 204px;
+  left: 148px;
+  animation: blink 0.5s infinite;
+}
+
+#game:focus #cursor {
+  display: block;
 }
