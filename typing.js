@@ -2512,6 +2512,19 @@ const getCurrentWord = () => {
   return document.querySelector(".word.current");
 };
 
+// added pressing Enter key to focus
+
+const game = document.getElementById("game");
+
+document.addEventListener("keydown", (e) => {
+  console.log("enter pressed");
+  
+  if (e.key === "Enter") {
+    e.preventDefault();
+    game.focus();
+  }
+});
+
 let lastLetter;
 
 document.getElementById("game").addEventListener("keyup", (e) => {
