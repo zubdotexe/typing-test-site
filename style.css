@@ -27,27 +27,36 @@ main {
 }
 
 #header {
-  width: 800px;
+  width: 300px;
   margin: 50px auto 30px auto;
+  background-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 7px;
+  padding: 5px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 #info {
   color: var(--primaryColor);
+  padding: 4px;
+  font-weight: bold;
 }
 
 button {
-  background-color: rgba(255, 255, 255, 0.3);
-  padding: 4px 10px;
+  /* background-color: rgba(255, 255, 255, 0.3); */
+  background-color: transparent;
+  padding: 4px;
   border: 0;
   border-radius: 5px;
+  font-weight: bold;
   color: var(--textPrimary);
   cursor: pointer;
 }
 
 button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  /* background-color: rgba(255, 255, 255, 0.2); */
   color: var(--primaryColor);
 }
 
@@ -118,7 +127,7 @@ div#game:focus #focus-warning {
   height: 1.5rem;
   background-color: var(--primaryColor);
   position: fixed;
-  top: 205px;
+  top: 218px;
   left: 150px;
   animation: blink 0.6s infinite;
 }

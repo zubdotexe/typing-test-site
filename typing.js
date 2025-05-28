@@ -2467,6 +2467,10 @@ const words = [
   "zoom",
 ];
 
+const gameTime = 30; // 30 seconds
+window.timer = null;
+window.gameStart = null;
+
 const randomWord = () => {
   const randomIndex = Math.floor(Math.random() * words.length);
   return words[randomIndex];
@@ -2523,6 +2527,27 @@ document.getElementById("game").addEventListener("keyup", (e) => {
 
   console.log({ expected: expectedKey, actual: actualKey });
 
+  if (!window.timer && isLetter) {
+    document.getElementById('cursor').style.animation = 'none';
+    window.timer = setInterval(() => {
+      if (!window.gameStart) {
+        window.gameStart = (new Date()).getTime();
+      }
+      // console.log(window.gameStart);
+
+      const currentTime = (new Date()).getTime();
+      const passedTimeMs = currentTime - window.gameStart;
+      const passedTimeS = Math.round(passedTimeMs / 1000);
+      // console.log(gameTime - passedTimeMs);
+      let leftTime = gameTime - passedTimeS;
+      if (leftTime <= 0) {
+        leftTime = 'Game Over'
+      }
+      
+      document.getElementById('info').innerHTML = leftTime;
+    }, 1000);
+  }
+
   if (isSpaceKey) {
     console.log(
       "inside isspace",
@@ -2555,6 +2580,7 @@ document.getElementById("game").addEventListener("keyup", (e) => {
         addClass(currentLetter.nextElementSibling, "current");
       } else {
         expectedKey = " ";
+        lastLetter = currentLetter;
       }
     }
   } else if (isLetter) {
@@ -2619,6 +2645,14 @@ document.getElementById("game").addEventListener("keyup", (e) => {
       removeClass(currentWord.lastElementChild, "incorrect");
       removeClass(currentWord.lastElementChild, "correct");
     }
+  }
+
+  // move lines
+
+  if (currentWord.getBoundingClientRect().top > 230) {
+    const words = document.getElementById("words");
+    const margin = parseInt(words.style.marginTop || '0px');
+    words.style.marginTop = (margin - 37) + 'px';
   }
 
   // moving cursor
