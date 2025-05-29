@@ -2509,6 +2509,8 @@ const newGame = () => {
     document.getElementById("words").innerHTML += formatWord(randomWord());
   }
 
+  document.getElementById('info').innerHTML = gameTime;
+
   addClass(document.querySelector(".word"), "current");
   addClass(document.querySelector(".letter"), "current");
 };
