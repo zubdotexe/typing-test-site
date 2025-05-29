@@ -2496,6 +2496,11 @@ const addLabel = (e, label) => {
   removeClass(e, "current");
 };
 
+const gameOver = () => {
+  clearInterval(window.timer);
+  addClass(document.getElementById('game'), 'over');
+};
+
 const newGame = () => {
   // let vocab = (document.getElementById("words").innerHTML = "");
 
@@ -2517,8 +2522,7 @@ const getCurrentWord = () => {
 const game = document.getElementById("game");
 
 document.addEventListener("keydown", (e) => {
-  console.log("enter pressed");
-  
+
   if (e.key === "Enter") {
     e.preventDefault();
     game.focus();
@@ -2540,6 +2544,10 @@ document.getElementById("game").addEventListener("keyup", (e) => {
 
   console.log({ expected: expectedKey, actual: actualKey });
 
+  if (document.querySelector('#game.over')) {
+    return;
+  }
+
   if (!window.timer && isLetter) {
     document.getElementById('cursor').style.animation = 'none';
     window.timer = setInterval(() => {
@@ -2554,7 +2562,8 @@ document.getElementById("game").addEventListener("keyup", (e) => {
       // console.log(gameTime - passedTimeMs);
       let leftTime = gameTime - passedTimeS;
       if (leftTime <= 0) {
-        leftTime = 'Game Over'
+        // leftTime = 'Game Over'
+        gameOver();
       }
       
       document.getElementById('info').innerHTML = leftTime;

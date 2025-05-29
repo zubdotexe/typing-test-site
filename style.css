@@ -135,3 +135,16 @@ div#game:focus #focus-warning {
 #game:focus #cursor {
   display: block;
 }
+
+#game.over #words {
+  opacity: 0.5;
+  filter: blur(0px);
+}
+
+#game.over:focus #cursor {
+  display: none;
+}
+
+#game.over #focus-warning {
+  display: none;
+}
