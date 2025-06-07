@@ -2496,9 +2496,27 @@ const addLabel = (e, label) => {
   removeClass(e, "current");
 };
 
+const getWPM  = () => {
+  const words = [...document.querySelectorAll('.word')];
+  const lastTypedWord = document.querySelector('.word.current');
+  const lastTypedWordIndex = words.indexOf(lastTypedWord);
+  const typedWords = words.slice(0, lastTypedWordIndex);
+  console.log('words', lastTypedWordIndex, lastTypedWord, typedWords);
+
+  const correctWords = typedWords.filter(word => {
+    const letters = [...word.children];
+    const incorrectLetters = letters.filter(letter => letter.className.includes('incorrect'));
+    const correctLetters = letters.filter(letter => letter.className.includes('correct'));
+    return incorrectLetters.length === 0 && correctLetters.length === letters.length;
+  })
+  
+  return correctWords.length / gameTime * 60;
+}
+
 const gameOver = () => {
   clearInterval(window.timer);
   addClass(document.getElementById('game'), 'over');
+  document.getElementById('info').innerHTML = `WPM: ${getWPM()}`;
 };
 
 const newGame = () => {
@@ -2566,6 +2584,7 @@ document.getElementById("game").addEventListener("keyup", (e) => {
       if (leftTime <= 0) {
         // leftTime = 'Game Over'
         gameOver();
+        return;
       }
       
       document.getElementById('info').innerHTML = leftTime;
