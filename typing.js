@@ -2715,4 +2715,9 @@ document.getElementById("game").addEventListener("keyup", (e) => {
   }
 });
 
+document.getElementById('newGame').addEventListener('click', () => {
+  gameOver();
+  newGame();
+})
+
 newGame();
