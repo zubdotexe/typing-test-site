@@ -24,4 +24,3 @@ A lightweight, **vanilla JavaScript** typing speed test application that measure
 
 ## 📜 Credits
 - Tutorial by CodingWithDawid  
-- Test quotes from [Source Name if any]
