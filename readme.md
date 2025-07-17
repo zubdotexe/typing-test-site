@@ -1,11 +1,12 @@
 # Typing Speed Test Web App
 
-A lightweight, **vanilla JavaScript** typing speed test application that measures your **Words Per Minute (WPM)**, accuracy, and typing efficiency in real-time.
+A lightweight, **vanilla JavaScript** typing speed test application that measures your **Words Per Minute (WPM)**, accuracy, and typing efficiency in real-time. 
 
-
-![Website Screenshot](image.png)
+ 
+<img width="1866" height="978" alt="typiie_screenshot" src="https://github.com/user-attachments/assets/b06b63f0-0790-4f10-b45a-142792355253" />
 
 ## Features
+
 - 📊 Real-time WPM (Words Per Minute) calculation
 - ✅ Accuracy percentage tracking
 - ⏱️ Countdown timer
