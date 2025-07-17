@@ -4,7 +4,7 @@
   --bgColor: #333;
   --textPrimary: #fff;
   --textSecondary: #adadad;
-  --primaryColor: oklab(73.656% -0.07137 -0.09461);
+  --primaryColor: rgb(80, 182, 232);
 }
 
 body {
