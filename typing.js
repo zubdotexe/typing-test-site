@@ -2520,17 +2520,30 @@ const gameOver = () => {
 };
 
 const newGame = () => {
-  // let vocab = (document.getElementById("words").innerHTML = "");
+  const wordsContainer = document.getElementById('words');
+  wordsContainer.innerHTML = '';
 
+  let wordsHTML = '';
   for (let i = 0; i < 200; i++) {
-    // vocab += randomWord();
-    document.getElementById("words").innerHTML += formatWord(randomWord());
+    wordsHTML += formatWord(randomWord());
   }
+  
+  // single DOM update
+  wordsContainer.innerHTML = wordsHTML;
 
-  document.getElementById('info').innerHTML = gameTime;
+  // setting game time
+  document.getElementById('info').innerHTML = `Time: ${gameTime}`;
 
-  addClass(document.querySelector(".word"), "current");
-  addClass(document.querySelector(".letter"), "current");
+  const firstWord = document.querySelector('.word');
+  const firstLetter = firstWord.querySelector('.letter');
+  const cursor = document.getElementById('cursor');
+  
+  addClass(firstWord, 'current');
+  addClass(firstLetter, 'current');
+  
+  cursor.style.left = firstLetter.getBoundingClientRect().left + 'px';
+  cursor.style.top = firstLetter.getBoundingClientRect().top + 6 + 'px';
+  cursor.style.animation = 'blink 1s infinite';
 };
 
 const getCurrentWord = () => {
@@ -2716,8 +2729,16 @@ document.getElementById("game").addEventListener("keyup", (e) => {
 });
 
 document.getElementById('newGame').addEventListener('click', () => {
-  gameOver();
+  // clearing previous game state
+  clearInterval(window.timer);
+  window.timer = null;
+  window.gameStart = null;
+  
+  // resetting game elements
+  document.getElementById('words').style.marginTop = '0px';
+  removeClass(document.getElementById('game'), 'over');
+
   newGame();
-})
+});
 
 newGame();
