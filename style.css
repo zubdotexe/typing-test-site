@@ -104,7 +104,7 @@ div#game:focus #focus-warning {
   font-family: "Roboto Mono", monospace;
   display: inline-block;
   margin: 0 10px;
-  font-size: x-large;
+  font-size: 1.8rem;
 }
 
 .letter.correct {
